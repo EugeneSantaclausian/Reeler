@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
-const cors = require("cors");
+//const cors = require("cors");
 const port = process.env.PORT || 2876;
 
-app.use(cors());
+//app.use(cors());
 
 const movies = [
   { id: 1, title: "Jungle Book", genre: "Animation", year: 2003 },
