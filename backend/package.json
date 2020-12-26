@@ -4,8 +4,7 @@
   "description": "movie catalogue app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "iSpace Code School Backend Class 2020",
   "license": "ISC",
