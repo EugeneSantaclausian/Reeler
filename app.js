@@ -3,7 +3,7 @@ document.getElementById("allmovies").style.display = "none";
 document.getElementById("moviesHeader").style.display = "none";
 document.getElementById("closeMovies").style.display = "none";
 
-const url = "https://reeler.netlify.app/api/movies";
+const url = "reeler.netlify.app/api/movies";
 const getMovies = (path) => {
   axios.get(path).then(
     (response) => {
