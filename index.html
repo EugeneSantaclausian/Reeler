@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="" />
     <meta name="generator" content="Hugo 0.79.0" />
-     <!--Axios Script Ref-->
-     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-     <!--Axios Script Ref-->
-    
+    <!--Axios Script Ref-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!--Axios Script Ref-->
+
     <title>Reeler</title>
 
     <!-- Bootstrap core CSS -->
@@ -33,7 +33,7 @@
     <!-- Custom styles for this template -->
     <link href="cover.css" rel="stylesheet" />
   </head>
-  <body class="d-flex h-100 ">
+  <body class="d-flex h-100">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
       <header class="mb-auto">
         <!--div>
@@ -48,32 +48,67 @@
 
       <main class="px-3 text-center">
         <h1 class="display-3">Reeler</h1>
+        <!--Spinner-->
+        <div
+          class="spinner-grow"
+          style="width: 5rem; height: 5rem; color: lightgreen"
+          role="status"
+          id="spinner"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <!--Spinner-->
         <p class="lead" id="subHeadText">A catalogue for all your movies</p>
-        <p class="lead" id="buttons">
-          <a class="btn btn-lg btn-success fw-bold border-white" onclick="getMovies(url)"
+        <div class="lead" id="buttons">
+          <a
+            class="btn btn-lg btn-success fw-bold border-white"
+            onclick="getMovies(url)"
             >View All Movies</a
           >
-         <div>
-          <button class="btn btn-lg btn-danger dropdown-toggle fw-bold border-white" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+
+          <button
+            class="btn btn-lg btn-danger dropdown-toggle fw-bold border-white text-center"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
             Select Per Genre
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item" href="#">Animation</a></li>
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Comedy</a></li>
-            <li><a class="dropdown-item" href="#">Mystery</a></li>
+          <ul
+            class="dropdown-menu dropdown-menu-dark"
+            aria-labelledby="dropdownMenuButton"
+          >
+            <li>
+              <a
+                class="dropdown-item"
+                id="AnimationGenre"
+                href="#"
+                onclick="getAnimationMovies()"
+                >Animation</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" id="ActionGenre" href="#">Action</a>
+            </li>
+            <li>
+              <a class="dropdown-item" id="ComedyGenre" href="#">Comedy</a>
+            </li>
+            <li>
+              <a class="dropdown-item" id="MysteryGenre" href="#">Mystery</a>
+            </li>
           </ul>
-         </div>
-
-         
-       
-        
-        </p>
+        </div>
       </main>
 
       <div class="mb-4">
         <!--ALL MOVIES SHOW HERE-->
-        <p class="h4 text-center bg-dark text-white pt-3 pb-3" id="moviesHeader">All Movies</p>
+        <p
+          class="h4 text-center bg-dark text-white pt-3 pb-3"
+          id="moviesHeader"
+        >
+          All Movies
+        </p>
         <div class="list-group list-group-flush mt-4 mb-4" id="allmovies">
           <a href="#" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
@@ -84,19 +119,20 @@
           </a>
         </div>
         <!---ALL MOVIES SHOW HERE-->
-        <a class="btn btn-lg btn-danger fw-bold border-white mt-3 mb-3 mr-4 ml-4 text-center" 
-        onclick="close()"
-        id="closeMovies"
-        >Close</a
-      >
+        <a
+          class="btn btn-lg btn-danger fw-bold border-white mt-3 mb-3 mr-4 ml-4 text-center"
+          onclick="closeMoviesList()"
+          id="closeMovies"
+          >Close</a
+        >
       </div>
-    <!-- Bootstrap core CSS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="bootstrap/js/bootstrap.js"></script>
+      <!-- Bootstrap core CSS -->
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+      <script src="bootstrap/js/bootstrap.js"></script>
       <!--App Script-->
       <script src="app.js"></script>
       <!--App Script-->
-      
+
       <footer class="mt-auto pb-3 text-center">
         <a href="http://www.ispacegh.com" target="_blank">
           © iSpace CodeSchool Class

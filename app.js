@@ -2,8 +2,9 @@
 document.getElementById("allmovies").style.display = "none";
 document.getElementById("moviesHeader").style.display = "none";
 document.getElementById("closeMovies").style.display = "none";
+document.getElementById("spinner").style.display = "none";
 
-const url = "https://reeler.netlify.app/api/movies";
+const url = "http://localhost:2876/api/movies";
 const getMovies = (path) => {
   axios.get(path).then(
     (response) => {
@@ -15,20 +16,28 @@ const getMovies = (path) => {
       console.log(error);
     }
   );
+  return;
 };
 
-const genre_url = "http://localhost:2876/api/movies";
-const getGenres = (path) => {
-  axios.get(path).then(
-    (response) => {
-      var result = response.data;
-      console.log(result);
-      return show(result);
-    },
-    (error) => {
-      console.log(error);
-    }
+const anime_url = `http://localhost:2876/api/movies/Animation`;
+const getAnimationMovies = () => {
+  document.getElementById("spinner").display = "block";
+  setTimeout(
+    axios.get(anime_url).then(
+      (response) => {
+        var result = response.data;
+        console.log(result);
+        document.getElementById("moviesHeader").innerHTML = "Animation Movies";
+        document.getElementById("spinner").display = "none";
+        return show(result);
+      },
+      (error) => {
+        console.log(error);
+      }
+    ),
+    6000
   );
+  return;
 };
 
 function show(data) {
@@ -72,5 +81,8 @@ const closeMoviesList = () => {
   document.getElementById("allmovies").style.display = "none";
   document.getElementById("moviesHeader").style.display = "none";
   document.getElementById("closeMovies").style.display = "none";
+  document.getElementById("subHeadText").style.display = "block";
+  document.getElementById("buttons").style.display = "block";
+  document.getElementById("dropdownMenuButton").style.display = "inline";
   return;
 };
