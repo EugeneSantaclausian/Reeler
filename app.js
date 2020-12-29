@@ -22,21 +22,20 @@ const getMovies = (path) => {
 const anime_url = `http://localhost:2876/api/movies/Animation`;
 const getAnimationMovies = () => {
   document.getElementById("spinner").display = "block";
-  setTimeout(
-    axios.get(anime_url).then(
-      (response) => {
-        var result = response.data;
-        console.log(result);
-        document.getElementById("moviesHeader").innerHTML = "Animation Movies";
-        document.getElementById("spinner").display = "none";
-        return show(result);
-      },
-      (error) => {
-        console.log(error);
-      }
-    ),
-    6000
+
+  axios.get(anime_url).then(
+    (response) => {
+      var result = response.data;
+      console.log(result);
+      document.getElementById("moviesHeader").innerHTML = "Animation Movies";
+      document.getElementById("spinner").display = "none";
+      return show(result);
+    },
+    (error) => {
+      console.log(error);
+    }
   );
+
   return;
 };
 
