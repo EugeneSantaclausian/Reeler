@@ -33,7 +33,8 @@ const getMovies = () => {
 //--------------------------------------------
 
 //-------Request to GET All Animation Movies------------
-const anime_url = `http://localhost:2876/api/movies/Animation`;
+const anime_url =
+  "https://reeler.netlify.app/.netlify/functions/index/api/movies/Animation";
 const requestAnime = () => {
   axios.get(anime_url).then(
     (response) => {
@@ -60,7 +61,8 @@ const getAnimationMovies = () => {
 //-------------------------------------------------------
 
 //-------Request to GET All Action Movies------------
-const action_url = `http://localhost:2876/api/movies/Action`;
+const action_url =
+  "https://reeler.netlify.app/.netlify/functions/index/api/movies/Action";
 const requestAction = () => {
   axios.get(action_url).then(
     (response) => {
@@ -87,7 +89,8 @@ const getActionMovies = () => {
 //-------------------------------------------------------
 
 //-------Request to GET All Comedy Movies------------
-const comedy_url = `http://localhost:2876/api/movies/Comedy`;
+const comedy_url =
+  "https://reeler.netlify.app/.netlify/functions/index/api/movies/Comedy";
 const requestComedy = () => {
   axios.get(comedy_url).then(
     (response) => {
@@ -114,7 +117,8 @@ const getComedyMovies = () => {
 //-------------------------------------------------------
 
 //-------Request to GET All Mystery Movies------------
-const mystery_url = `http://localhost:2876/api/movies/Mystery`;
+const mystery_url =
+  "https://reeler.netlify.app/.netlify/functions/index/api/movies/Mystery";
 const requestMystery = () => {
   axios.get(mystery_url).then(
     (response) => {
