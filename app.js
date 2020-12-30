@@ -5,7 +5,7 @@ document.getElementById("closeMovies").style.display = "none";
 document.getElementById("spinner").style.display = "none";
 
 //------Request to GET All Movies------
-const url = "https://reeler.netlify.app/api/movies";
+const url = "http://localhost:2876/api/movies";
 const requestMovies = (path) => {
   axios.get(path).then(
     (response) => {
