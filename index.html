@@ -50,8 +50,8 @@
         <h1 class="display-3">Reeler</h1>
         <!--Spinner-->
         <div
-          class="spinner-grow"
-          style="width: 5rem; height: 5rem; color: lightgreen"
+          class="spinner-grow text-center mx-auto"
+          style="width: 8rem; height: 8rem; color: lightskyblue"
           role="status"
           id="spinner"
         >
@@ -62,7 +62,7 @@
         <div class="lead" id="buttons">
           <a
             class="btn btn-lg btn-success fw-bold border-white"
-            onclick="getMovies(url)"
+            onclick="getMovies()"
             >View All Movies</a
           >
 
@@ -89,13 +89,31 @@
               >
             </li>
             <li>
-              <a class="dropdown-item" id="ActionGenre" href="#">Action</a>
+              <a
+                class="dropdown-item"
+                id="ActionGenre"
+                href="#"
+                onclick="getActionMovies()"
+                >Action</a
+              >
             </li>
             <li>
-              <a class="dropdown-item" id="ComedyGenre" href="#">Comedy</a>
+              <a
+                class="dropdown-item"
+                id="ComedyGenre"
+                href="#"
+                onclick="getComedyMovies()"
+                >Comedy</a
+              >
             </li>
             <li>
-              <a class="dropdown-item" id="MysteryGenre" href="#">Mystery</a>
+              <a
+                class="dropdown-item"
+                id="MysteryGenre"
+                href="#"
+                onclick="getMysteryMovies()"
+                >Mystery</a
+              >
             </li>
           </ul>
         </div>
