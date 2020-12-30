@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "./node_modules/.bin/netlify-lambda serve backend",
+    "build": "./node_modules/.bin/netlify-lambda build backend"
   },
   "author": "iSpace Code School Backend Class 2020",
   "license": "ISC",
@@ -13,6 +14,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "joi": "^17.3.0",
-    "nodemon": "^2.0.6"
+    "netlify-lambda": "^2.0.2",
+    "nodemon": "^2.0.6",
+    "serverless-http": "^2.6.0"
   }
 }

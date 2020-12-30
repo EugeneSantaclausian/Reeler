@@ -1,9 +1,12 @@
 const express = require("express");
+const serverless = require("serverless-http");
 const app = express();
+const router = express.Router();
 const cors = require("cors");
-const port = process.env.PORT || 2876;
+//const port = process.env.PORT || 2876;
 
 app.use(cors());
+app.use("/.netlify/functions/index", router);
 
 const movies = [
   { id: 1, title: "Jungle Book", genre: "Animation", year: 2003 },
@@ -27,15 +30,16 @@ const movies = [
 ];
 
 //Get request for movies per the genre
-app.get("/api/movies/:genre", (req, res) => {
+router.get("/api/movies/:genre", (req, res) => {
   movie = movies.filter((mov) => mov.genre == req.params.genre);
   movie == null || undefined
     ? res.send("Genre Not Found!!").status(404)
     : res.send(movie);
 });
 
-app.get("/api/movies", (req, res) => {
+router.get("/api/movies", (req, res) => {
   res.send(movies);
 });
 
-app.listen(port, () => console.log(`Listening on Port ${port}....`));
+//app.listen(port, () => console.log(`Listening on Port ${port}....`));
+module.exports.handler = serverless(app);
