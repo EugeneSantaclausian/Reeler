@@ -1,5 +1,5 @@
 # Reeler
-A demo movie db project built on NodeJS, Express &amp; Mongodb
+A simple movie catalogue project built on NodeJS, Express &amp; Mongodb
 
-See Here:  
-reeler.netlify.app
+See Here:
+https://reeler.netlify.app/
