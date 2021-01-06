@@ -9,8 +9,8 @@ const Joi = require("joi");
 
 app.use(cors());
 app.use("/.netlify/functions/index", router); //Router to use Netlify Functions
-router.use(express.urlencoded({ extended: true })); //Body Parser
-router.use(express.json()); //Body Parser
+app.use(express.urlencoded({ extended: true })); //Body Parser
+app.use(express.json()); //Body Parser
 
 const movies = [
   { id: 1, title: "Jungle Book", genre: "Animation", year: 2003 },
