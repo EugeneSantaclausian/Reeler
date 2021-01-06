@@ -1,18 +1,25 @@
 const express = require("express");
 const serverless = require("serverless-http");
-const bodyParser = require("body-parser");
 const app = express();
 const router = express.Router();
 const cors = require("cors");
 const Joi = require("joi");
 //const port = process.env.PORT || 2876;
 
-app.use(cors());
+//app.use(cors());
+const dev_url = "http://localhost:5500";
+const prod_url = "https://reeler.netlify.app";
+var corsOptions = {
+  origin: [dev_url, prod_url],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 app.use("/.netlify/functions/index", router); //Router to use Netlify Functions
-app.use(express.urlencoded({ extended: true })); //Body Parser
-app.use(express.json()); //Body Parser
+router.use(express.urlencoded({ extended: true })); //Body Parser
+router.use(express.json()); //Body Parser
 
-const movies = [
+var movies = [
   { id: 1, title: "Jungle Book", genre: "Animation", year: 2003 },
   { id: 2, title: "Justice League", genre: "Action", year: 2016 },
   { id: 3, title: "Home Alone", genre: "Comedy", year: 1996 },
@@ -26,7 +33,7 @@ const movies = [
   { id: 6, title: "Avengers End Game", genre: "Action", year: 2018 },
   { id: 7, title: "The Devil Wears Prada", genre: "Comedy", year: 2007 },
   {
-    id: 4,
+    id: 8,
     title: "Chronicles of Narnia",
     genre: "Mystery",
     year: 2012,
@@ -39,10 +46,12 @@ router.get("/api/movies/:genre", (req, res) => {
   movie == null || undefined
     ? res.send("Genre Not Found!!").status(404)
     : res.send(movie);
+  return;
 });
 
+//Get Request for all movies
 router.get("/api/movies", (req, res) => {
-  res.send(movies);
+  return res.send(movies);
 });
 
 //Post Request for  A New Movie
@@ -51,7 +60,7 @@ router.post("/api/movies", (req, res) => {
   const schema = Joi.object({
     title: Joi.string().max(30).required(),
     genre: Joi.string().max(30).required(),
-    year: Joi.number().min(3).max(4).required(),
+    year: Joi.number().min(4).required(),
   });
 
   try {
@@ -68,11 +77,11 @@ router.post("/api/movies", (req, res) => {
     genre: req.body.genre,
     year: req.body.year,
   };
-  //Push movie to Movies
-  movies.unshift(movie);
+  //Add movie to Movies
+  movies.push(movie);
   console.log("REQ.BODY:", req.body);
   //Return Response to Client
-  res.send(movie);
+  return res.send(movie);
 });
 
 //app.listen(port, () => console.log(`Listening on Port ${port}....`));

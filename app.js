@@ -32,7 +32,7 @@ const getMovies = () => {
   document.getElementById("buttons").style.display = "none";
   document.getElementById("dropdownMenuButton").style.display = "none";
   document.getElementById("spinner").style.display = "block";
-  setTimeout(() => requestMovies(prod_url), 1000);
+  setTimeout(() => requestMovies(dev_url), 1000);
   return;
 };
 //--------------------------------------------
