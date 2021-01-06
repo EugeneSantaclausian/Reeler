@@ -78,7 +78,7 @@ router.post("/api/movies", (req, res) => {
     year: req.body.year,
   };
   //Add movie to Movies
-  movies.push(movie);
+  movies.unshift(movie);
   console.log("REQ.BODY:", req.body);
   //Return Response to Client
   return res.send(movie);
