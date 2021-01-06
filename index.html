@@ -162,13 +162,13 @@
           <label for="exampleInputEmail1" class="form-label"
             ><h5 class="ml-4">Title</h5></label
           >
-          <input type="text" class="form-control" id="movieTitle" />
+          <input type="text" class="form-control" id="movieTitle" required />
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label"
             ><h5>Year</h5></label
           >
-          <input type="number" class="form-control" id="movieYear" />
+          <input type="number" class="form-control" id="movieYear" required />
         </div>
 
         <div class="mb-3 text-left">
@@ -177,6 +177,7 @@
             class="form-select"
             aria-label="Default select example"
             id="selectedGenre"
+            required
           >
             <option selected disabled>Select Genre</option>
             <option value="Action">Action</option>

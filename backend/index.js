@@ -14,8 +14,9 @@ var corsOptions = {
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   optionsSuccessStatus: 200,
 };
-app.use(cors(corsOptions));
+
 app.use("/.netlify/functions/index", router); //Router to use Netlify Functions
+app.use(cors(corsOptions));
 router.use(express.urlencoded({ extended: true })); //Body Parser
 router.use(express.json()); //Body Parser
 
