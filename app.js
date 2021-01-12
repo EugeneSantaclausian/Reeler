@@ -38,10 +38,12 @@ const getMovies = () => {
 //--------------------------------------------
 
 //-------Request to GET All Animation Movies------------
-const anime_url =
+const anime_url_prod =
   "https://reeler.netlify.app/.netlify/functions/index/api/movies/Animation";
+const anime_url_dev =
+  "http://localhost:9000/.netlify/functions/index/api/movies/Animation";
 const requestAnime = () => {
-  axios.get(anime_url).then(
+  axios.get(anime_url_prod).then(
     (response) => {
       var result = response.data;
       console.log(result);
@@ -66,10 +68,12 @@ const getAnimationMovies = () => {
 //-------------------------------------------------------
 
 //-------Request to GET All Action Movies------------
-const action_url =
+const action_url_prod =
   "https://reeler.netlify.app/.netlify/functions/index/api/movies/Action";
+const action_url_dev =
+  "http://localhost:9000/.netlify/functions/index/api/movies/Action";
 const requestAction = () => {
-  axios.get(action_url).then(
+  axios.get(action_url_prod).then(
     (response) => {
       var result = response.data;
       console.log(result);
@@ -94,10 +98,12 @@ const getActionMovies = () => {
 //-------------------------------------------------------
 
 //-------Request to GET All Comedy Movies------------
-const comedy_url =
+const comedy_url_prod =
   "https://reeler.netlify.app/.netlify/functions/index/api/movies/Comedy";
+const comedy_url_dev =
+  "http://localhost:9000/.netlify/functions/index/api/movies/Comedy";
 const requestComedy = () => {
-  axios.get(comedy_url).then(
+  axios.get(comedy_url_prod).then(
     (response) => {
       var result = response.data;
       console.log(result);
@@ -122,10 +128,12 @@ const getComedyMovies = () => {
 //-------------------------------------------------------
 
 //-------Request to GET All Mystery Movies------------
-const mystery_url =
+const mystery_url_prod =
   "https://reeler.netlify.app/.netlify/functions/index/api/movies/Mystery";
+const mystery_url_dev =
+  "http://localhost:9000/.netlify/functions/index/api/movies/Mystery";
 const requestMystery = () => {
-  axios.get(mystery_url).then(
+  axios.get(mystery_url_prod).then(
     (response) => {
       var result = response.data;
       console.log(result);
@@ -185,13 +193,14 @@ const getForm = () => {
       (response) => {
         console.log(response.data);
         document.getElementById("moviesHeader").innerHTML = "New Movie Added!";
-        return showModal(response.data);
+        showModal(response.data);
+        return document.getElementById("movieForm").reset();
       },
       (error) => {
         console.log(error);
       }
     );
-  return document.getElementById("movieForm").reset();
+  return;
 };
 //-------------------------------------------------------
 

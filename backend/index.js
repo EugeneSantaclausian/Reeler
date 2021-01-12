@@ -4,19 +4,15 @@ const app = express();
 const router = express.Router();
 const cors = require("cors");
 const Joi = require("joi");
-//const port = process.env.PORT || 2876;
 
-//app.use(cors());
-const dev_url = "http://localhost:5500";
-const prod_url = "https://reeler.netlify.app";
+const port = "https://reeler.netlify.app";
 var corsOptions = {
-  origin: [dev_url, prod_url],
+  origin: port,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   optionsSuccessStatus: 200,
 };
-
+app.use(cors(corsOptions)); //add corsOptions as an argument in cors() when deploying to netlify
 app.use("/.netlify/functions/index", router); //Router to use Netlify Functions
-app.use(cors(corsOptions));
 router.use(express.urlencoded({ extended: true })); //Body Parser
 router.use(express.json()); //Body Parser
 
@@ -66,9 +62,10 @@ router.post("/api/movies", (req, res) => {
 
   try {
     const result = schema.validateAsync(req.body);
-    console.log(result);
+    console.log("PROMISE:", result);
   } catch (error) {
-    console.log(error);
+    //console.log(`Error is:`, error);
+    return res.status(400).send(error);
   }
 
   //Movie Object from Request Body
@@ -80,7 +77,6 @@ router.post("/api/movies", (req, res) => {
   };
   //Add movie to Movies
   movies.unshift(movie);
-  console.log("REQ.BODY:", req.body);
   //Return Response to Client
   return res.send(movie);
 });
