@@ -53,21 +53,6 @@ router.get("/api/movies", (req, res) => {
 
 //Post Request for  A New Movie
 router.post("/api/movies", (req, res) => {
-  //Joi Schema for Input Validation
-  const schema = Joi.object({
-    title: Joi.string().max(30).required(),
-    genre: Joi.string().max(30).required(),
-    year: Joi.number().min(4).required(),
-  });
-
-  try {
-    const result = schema.validateAsync(req.body);
-    console.log("PROMISE:", result);
-  } catch (error) {
-    //console.log(`Error is:`, error);
-    return res.status(400).send(error);
-  }
-
   //Movie Object from Request Body
   const movie = {
     id: movies.length + 1,
@@ -75,10 +60,25 @@ router.post("/api/movies", (req, res) => {
     genre: req.body.genre,
     year: req.body.year,
   };
-  //Add movie to Movies
-  movies.unshift(movie);
-  //Return Response to Client
-  return res.send(movie);
+
+  //Joi Schema for Input Validation
+  const schema = Joi.object({
+    title: Joi.string().max(30).required(),
+    genre: Joi.string().max(30).required(),
+    year: Joi.number().min(4).required(),
+  });
+
+  const validator = async () => {
+    try {
+      const value = await schema.validateAsync(req.body);
+      movies.unshift(movie);
+      return res.send(movie).status(200);
+    } catch (err) {
+      return res.send(err).status(400);
+    }
+  };
+
+  validator(); //an async function to validate the req.body
 });
 
 //app.listen(port, () => console.log(`Listening on Port ${port}....`));

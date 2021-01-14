@@ -25,3 +25,53 @@
 ​
 Happy Coding!!!!!!
 */
+
+//console.log("TEST IS WOrkinmgn.");
+
+const Joi = require("joi"); //Joi is for validating the user input to be posted
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 3900;
+app.use(express.json()); //enable bodyparser in express - its a middleware
+
+class User {
+  constructor(id, name, age, type, subFee) {
+    this.id = id;
+    this.name = name;
+    this.age = age;
+    this.type = type;
+    this.subFee = subFee;
+  }
+}
+
+const userOne = new User(1, "James Smith", 18, "free", 0);
+const userTwo = new User(2, "Freda Jones", 28, "free", 0);
+const userThree = new User(3, "Vida Asante", 24, "premium", 45);
+const userFour = new User(4, "Fiifi Hanson", 22, "free", 0);
+const userFive = new User(5, "Dennis Daniels", 35, "premium", 500);
+const myUsers = [userOne, userTwo, userThree, userFour, userFive];
+//console.log(myUsers);
+
+//Get Class by Class Id
+app.get("/api/users/:classid", (req, res) => {
+  user = myUsers.find((myclass) => myclass.id == parseInt(req.params.classid));
+  console.log("USERCLASS:", user);
+  user == null || undefined
+    ? res.send("CLASS NOT FOUND").status(404)
+    : res.send(user).status(200);
+});
+
+//Get User Type - i.e Premium or Free
+app.get("/api/users/type/:usertype", (req, res) => {
+  user = myUsers.filter((myclass) => myclass.type == req.params.usertype);
+  user == null || undefined
+    ? res.send("USER TYPE FOUND").status(404)
+    : res.send(user).status(200);
+});
+
+//Get all Users
+app.get("/api/users", (req, res) => {
+  return res.send(myUsers);
+});
+
+app.listen(port, () => console.log(`Listening on port ${port}`));
