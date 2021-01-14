@@ -170,7 +170,8 @@ const showForm = () => {
   return;
 };
 
-const getForm = () => {
+const getForm = (event) => {
+  event.preventDefault();
   const mtitle = document.getElementById("movieTitle").value;
   const myear = document.getElementById("movieYear").value;
   const mgenre = document.getElementById("selectedGenre").value;

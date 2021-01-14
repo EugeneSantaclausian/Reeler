@@ -11,7 +11,7 @@ var corsOptions = {
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   optionsSuccessStatus: 200,
 };
-app.use(cors(corsOptions)); //add corsOptions as an argument in cors() when deploying to netlify
+app.use(cors()); //add corsOptions as an argument in cors() when deploying to netlify
 app.use("/.netlify/functions/index", router); //Router to use Netlify Functions
 router.use(express.urlencoded({ extended: true })); //Body Parser
 router.use(express.json()); //Body Parser
