@@ -7,23 +7,59 @@ document.getElementById("spinner").style.display = "none";
 document.getElementById("movieForm").style.display = "none";
 document.getElementById("movieModal").style.display = "none";
 
+//----------Function to Display Data-------------------------
+function show(data) {
+  const item = `
+      <a href="#" class="list-group-item list-group-item-action" >
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1" id="title"></h5>
+          <small id="year"></small>
+        </div>
+        <small id="genre"></small>
+      </a>
+  `;
+
+  itemList = data.map(
+    (movie) => `
+  <a href="#" class="list-group-item list-group-item-action" >
+  <div class="d-flex w-100 justify-content-between">
+    <h5 class="mb-1" id="title">${movie.title}</h5>
+    <small id="year">${movie.year}</small>
+  </div>
+  <small id="genre">${movie.genre}</small>
+</a>
+  `
+  );
+
+  const arrangedList = itemList.join("");
+
+  // Setting innerHTML as tab variable
+  document.getElementById("allmovies").style.display = "block";
+  document.getElementById("moviesHeader").style.display = "block";
+  document.getElementById("closeMovies").style.display = "block";
+  document.getElementById("subHeadText").style.display = "none";
+  document.getElementById("buttons").style.display = "none";
+  document.getElementById("dropdownMenuButton").style.display = "none";
+  document.getElementById("allmovies").innerHTML = arrangedList;
+  return;
+}
+//------------------------------------------------
+
 //------Request to GET All Movies------
 const prod_url =
   "https://reeler.netlify.app/.netlify/functions/index/api/movies"; //production url
 const dev_url = "http://localhost:9000/.netlify/functions/index/api/movies"; //development url
 const requestMovies = (path) => {
-  axios.get(path).then(
-    (response) => {
+  axios
+    .get(path)
+    .then((response) => {
       var result = response.data;
       console.log(result);
       document.getElementById("spinner").style.display = "none";
       document.getElementById("moviesHeader").innerHTML = "All Movies";
       return show(result);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
+    })
+    .catch((error) => console.error("Error:", error));
   return;
 };
 
@@ -43,18 +79,16 @@ const anime_url_prod =
 const anime_url_dev =
   "http://localhost:9000/.netlify/functions/index/api/movies/Animation";
 const requestAnime = () => {
-  axios.get(anime_url_prod).then(
-    (response) => {
+  axios
+    .get(anime_url_prod)
+    .then((response) => {
       var result = response.data;
       console.log(result);
       document.getElementById("spinner").style.display = "none";
       document.getElementById("moviesHeader").innerHTML = "Animation Movies";
       return show(result);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
+    })
+    .catch((error) => console.error("Error:", error));
 };
 
 const getAnimationMovies = () => {
@@ -73,18 +107,16 @@ const action_url_prod =
 const action_url_dev =
   "http://localhost:9000/.netlify/functions/index/api/movies/Action";
 const requestAction = () => {
-  axios.get(action_url_prod).then(
-    (response) => {
+  axios
+    .get(action_url_prod)
+    .then((response) => {
       var result = response.data;
       console.log(result);
       document.getElementById("spinner").style.display = "none";
       document.getElementById("moviesHeader").innerHTML = "Action Movies";
       return show(result);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
+    })
+    .catch((error) => console.error("Error:", error));
 };
 
 const getActionMovies = () => {
@@ -103,18 +135,16 @@ const comedy_url_prod =
 const comedy_url_dev =
   "http://localhost:9000/.netlify/functions/index/api/movies/Comedy";
 const requestComedy = () => {
-  axios.get(comedy_url_prod).then(
-    (response) => {
+  axios
+    .get(comedy_url_prod)
+    .then((response) => {
       var result = response.data;
       console.log(result);
       document.getElementById("spinner").style.display = "none";
       document.getElementById("moviesHeader").innerHTML = "Comedy Movies";
       return show(result);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
+    })
+    .catch((error) => console.error("Error:", error));
 };
 
 const getComedyMovies = () => {
@@ -133,18 +163,16 @@ const mystery_url_prod =
 const mystery_url_dev =
   "http://localhost:9000/.netlify/functions/index/api/movies/Mystery";
 const requestMystery = () => {
-  axios.get(mystery_url_prod).then(
-    (response) => {
+  axios
+    .get(mystery_url_prod)
+    .then((response) => {
       var result = response.data;
       console.log(result);
       document.getElementById("spinner").style.display = "none";
       document.getElementById("moviesHeader").innerHTML = "Mystery Movies";
       return show(result);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
+    })
+    .catch((error) => console.error("Error:", error));
 };
 
 const getMysteryMovies = () => {
@@ -190,57 +218,16 @@ const getForm = (event) => {
         },
       }
     )
-    .then(
-      (response) => {
-        console.log(response.data);
-        document.getElementById("moviesHeader").innerHTML = "New Movie Added!";
-        showModal(response.data);
-        return document.getElementById("movieForm").reset();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    .then((response) => {
+      console.log(response.data);
+      document.getElementById("moviesHeader").innerHTML = "New Movie Added!";
+      showModal(response.data);
+      return document.getElementById("movieForm").reset();
+    })
+    .catch((error) => console.error("Error:", error));
   return;
 };
 //-------------------------------------------------------
-
-//----------Function to Display Data-------------------------
-function show(data) {
-  const item = `
-      <a href="#" class="list-group-item list-group-item-action" >
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1" id="title"></h5>
-          <small id="year"></small>
-        </div>
-        <small id="genre"></small>
-      </a>
-  `;
-
-  itemList = data.map(
-    (movie) => `
-  <a href="#" class="list-group-item list-group-item-action" >
-  <div class="d-flex w-100 justify-content-between">
-    <h5 class="mb-1" id="title">${movie.title}</h5>
-    <small id="year">${movie.year}</small>
-  </div>
-  <small id="genre">${movie.genre}</small>
-</a>
-  `
-  );
-
-  const arrangedList = itemList.join("");
-
-  // Setting innerHTML as tab variable
-  document.getElementById("allmovies").style.display = "block";
-  document.getElementById("moviesHeader").style.display = "block";
-  document.getElementById("closeMovies").style.display = "block";
-  document.getElementById("subHeadText").style.display = "none";
-  document.getElementById("buttons").style.display = "none";
-  document.getElementById("dropdownMenuButton").style.display = "none";
-  document.getElementById("allmovies").innerHTML = arrangedList;
-  return;
-}
 
 //--------------SHOW MODAL-----------------------------------------
 
