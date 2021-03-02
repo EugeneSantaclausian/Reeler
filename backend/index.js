@@ -10,7 +10,7 @@ var corsOptions = {
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   optionsSuccessStatus: 200,
 };
-app.use(cors()); //add corsOptions as an argument in cors() when deploying to netlify
+app.use(cors(corsOptions)); //add corsOptions as an argument in cors() when deploying to netlify
 app.use("/.netlify/functions/index/api/movies", movies); //Router to use Netlify Functions & Access routes from api
 
 module.exports.handler = serverless(app);
