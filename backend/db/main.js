@@ -13,7 +13,7 @@ const dbConnect = async () => {
       }
     ) //This is the Connection String. Local Host is hardcoded but will change depending on the environment
     .then(() => console.log("Connected to MongoDB")) //The connect method returns a Promise. If it's fulfilled, It does this.
-    .catch((err) => console.error("Failed to connect to MongoDB...", err));
+    .catch((err) => console.log("Failed to connect to MongoDB...", err));
 };
 
 dbConnect();
