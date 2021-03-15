@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const Joi = require("joi");
-//const { get } = require("mongoose");
 const Moviesdb = require("../db/main");
 const db = require("../db/connect");
 

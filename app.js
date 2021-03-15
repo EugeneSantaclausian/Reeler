@@ -98,7 +98,7 @@ const anime_url_prod = "https://reeler.herokuapp.com/api/movies/Animation";
 const anime_url_dev = "http://localhost:3500/api/movies/Animation";
 const requestAnime = () => {
   axios
-    .get(anime_url_dev)
+    .get(anime_url_prod)
     .then((response) => {
       var result = response.data;
       console.log(result);
