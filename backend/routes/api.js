@@ -3,6 +3,7 @@ const router = express.Router();
 const Joi = require("joi");
 //const { get } = require("mongoose");
 const Moviesdb = require("../db/main");
+const db = require("../db/connect");
 
 router.use(express.urlencoded({ extended: true })); //Body Parser
 router.use(express.json()); //Body Parser
@@ -12,6 +13,7 @@ let allMovies = [];
 
 //Get All Movies from the Database
 const getMovies = async () => {
+  db.Connect();
   allMovies = await Moviesdb.find({});
 };
 
@@ -63,8 +65,8 @@ router.post("/", (req, res) => {
 
   const validator = async () => {
     try {
-      const value = await schema.validateAsync(movie); //Validates
-      createMovie(movie);
+      await schema.validateAsync(movie); //Validates
+      await createMovie(movie);
       ///movies.unshift(movie);
       return res.send(movie).status(200);
     } catch (err) {
@@ -72,6 +74,17 @@ router.post("/", (req, res) => {
     }
   };
   validator(); //an async function to validate the req.body
+});
+
+router.delete("/:id", async (req, res) => {
+  await getMovies(); //get all movies first
+  movie = allMovies.filter((mov) => mov.id == req.params.id);
+  if (movie == null || undefined) {
+    return res.send("Movie Not Found!!").status(404);
+  } else {
+    await movie.findByIdandRemove(req.params.id);
+    return res.send(movie).status(200);
+  }
 });
 
 //app.listen(port, () => console.log(`Listening on Port ${port}....`));

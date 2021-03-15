@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
-/*const prod_uri =
+const prod_uri =
   "mongodb+srv://reeleradmin:reeler@cluster0.3nrof.mongodb.net/Reeler?retryWrites=true&w=majority";
 const dev_uri = "mongodb://localhost:27017/reeler";
 
-//How to Connect to Mongodb
 const dbConnect = async () => {
   await mongoose
     .connect(prod_uri, {
@@ -17,16 +16,6 @@ const dbConnect = async () => {
 };
 
 dbConnect();
-console.log("Main is active");*/
+console.log("Main is active");
 
-//Schema for Db Document in Collection
-const movieSchema = new mongoose.Schema({
-  title: String,
-  genre: String,
-  year: Number, //this should be a number
-});
-
-//Model Class Created from the Scema
-const Movies = mongoose.model("movies", movieSchema); //Pascal Naming Convention because of the Class
-
-module.exports = Movies;
+module.exports.Connect = dbConnect;

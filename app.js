@@ -1,27 +1,23 @@
 //import axios from "axios";
 document.getElementById("allmovies").style.display = "none";
+document.getElementById("alldelmovies").style.display = "none";
+document.getElementById("delForm").style.display = "none";
 document.getElementById("moviesHeader").style.display = "none";
+document.getElementById("delmoviesHeader").style.display = "none";
 document.getElementById("closeMovies").style.display = "none";
+document.getElementById("closeMovies2").style.display = "none";
 document.getElementById("closeForm").style.display = "none";
 document.getElementById("spinner").style.display = "none";
 document.getElementById("movieForm").style.display = "none";
 document.getElementById("movieModal").style.display = "none";
 
+var delMovies;
+
 //----------Function to Display Data-------------------------
 function show(data) {
-  const item = `
-      <a href="#" class="list-group-item list-group-item-action" >
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1" id="title"></h5>
-          <small id="year"></small>
-        </div>
-        <small id="genre"></small>
-      </a>
-  `;
-
   itemList = data.map(
     (movie) => `
-  <a href="#" class="list-group-item list-group-item-action" >
+  <a href="#" id="link" class="list-group-item list-group-item-action" >
   <div class="d-flex w-100 justify-content-between">
     <h5 class="mb-1" id="title">${movie.title}</h5>
     <small id="year">${movie.year}</small>
@@ -45,10 +41,34 @@ function show(data) {
 }
 //------------------------------------------------
 
+//----------Function to Display All Data - DELETE-------------------------
+function showDel(data) {
+  itemList = data.map(
+    (movie) => `
+      <option value="delSelect">${movie.title}</option>
+  `
+  );
+
+  const arrangedList = itemList.join("");
+
+  // Setting innerHTML as tab variable
+  document.getElementById("alldelmovies").style.display = "block";
+  document.getElementById("delForm").style.display = "block";
+  document.getElementById("allmovies").style.display = "none";
+  document.getElementById("moviesHeader").style.display = "none";
+  document.getElementById("delmoviesHeader").style.display = "block";
+  document.getElementById("closeMovies").style.display = "block";
+  document.getElementById("subHeadText").style.display = "none";
+  document.getElementById("buttons").style.display = "none";
+  document.getElementById("dropdownMenuButton").style.display = "none";
+  document.getElementById("alldelmovies").innerHTML = arrangedList;
+  return;
+}
+//------------------------------------------------
+
 //------Request to GET All Movies------
-const prod_url =
-  "https://reeler.netlify.app/.netlify/functions/index/api/movies"; //production url
-const dev_url = "http://localhost:9000/.netlify/functions/index/api/movies"; //development url
+const prod_url = "https://reeler.herokuapp.com/api/movies"; //production url
+const dev_url = "http://localhost:3500/api/movies"; //development url
 const requestMovies = (path) => {
   axios
     .get(path)
@@ -68,19 +88,17 @@ const getMovies = () => {
   document.getElementById("buttons").style.display = "none";
   document.getElementById("dropdownMenuButton").style.display = "none";
   document.getElementById("spinner").style.display = "block";
-  setTimeout(() => requestMovies(prod_url), 1000);
+  requestMovies(prod_url);
   return;
 };
 //--------------------------------------------
 
 //-------Request to GET All Animation Movies------------
-const anime_url_prod =
-  "https://reeler.netlify.app/.netlify/functions/index/api/movies/Animation";
-const anime_url_dev =
-  "http://localhost:9000/.netlify/functions/index/api/movies/Animation";
+const anime_url_prod = "https://reeler.herokuapp.com/api/movies/Animation";
+const anime_url_dev = "http://localhost:3500/api/movies/Animation";
 const requestAnime = () => {
   axios
-    .get(anime_url_prod)
+    .get(anime_url_dev)
     .then((response) => {
       var result = response.data;
       console.log(result);
@@ -102,10 +120,8 @@ const getAnimationMovies = () => {
 //-------------------------------------------------------
 
 //-------Request to GET All Action Movies------------
-const action_url_prod =
-  "https://reeler.netlify.app/.netlify/functions/index/api/movies/Action";
-const action_url_dev =
-  "http://localhost:9000/.netlify/functions/index/api/movies/Action";
+const action_url_prod = "https://reeler.herokuapp.com/api/movies/Action";
+const action_url_dev = "http://localhost:3500/api/movies/Action";
 const requestAction = () => {
   axios
     .get(action_url_prod)
@@ -130,10 +146,8 @@ const getActionMovies = () => {
 //-------------------------------------------------------
 
 //-------Request to GET All Comedy Movies------------
-const comedy_url_prod =
-  "https://reeler.netlify.app/.netlify/functions/index/api/movies/Comedy";
-const comedy_url_dev =
-  "http://localhost:9000/.netlify/functions/index/api/movies/Comedy";
+const comedy_url_prod = "https://reeler.herokuapp.com/api/movies/Comedy";
+const comedy_url_dev = "http://localhost:3500/api/movies/Comedy";
 const requestComedy = () => {
   axios
     .get(comedy_url_prod)
@@ -158,10 +172,8 @@ const getComedyMovies = () => {
 //-------------------------------------------------------
 
 //-------Request to GET All Mystery Movies------------
-const mystery_url_prod =
-  "https://reeler.netlify.app/.netlify/functions/index/api/movies/Mystery";
-const mystery_url_dev =
-  "http://localhost:9000/.netlify/functions/index/api/movies/Mystery";
+const mystery_url_prod = "https://reeler.herokuapp.com/api/movies/Mystery";
+const mystery_url_dev = "http://localhost:3500/api/movies/Mystery";
 const requestMystery = () => {
   axios
     .get(mystery_url_prod)
@@ -256,11 +268,66 @@ function showModal(data) {
 }
 //-------------------------------------------------------
 
+//--------------SHOW MODAL-----------------------------------------
+
+function deleteMovie() {
+  console.log("Del Movies:", delMovies);
+
+  const itemtitle = document.getElementById("delSelect").innerText;
+  console.log(itemtitle);
+
+  {
+    /* axios
+    .del(dev_url, {
+      id: itemid,
+    })
+    .then((response) => {
+      console.log(response.data);
+      document.getElementById("moviesHeader").innerHTML = "Movie Deleted!";
+      return showModal(response.data);
+    })
+    .catch((error) => console.error("Error:", error));
+  return;*/
+  }
+}
+//-------------------------------------------------------
+
+//------Request to DELETE Movies------
+const getdelMovies = (path) => {
+  axios
+    .get(path)
+    .then((response) => {
+      var result = response.data;
+      delMovies = result;
+      console.log(result);
+      document.getElementById("spinner").style.display = "none";
+      document.getElementById("delmoviesHeader").innerHTML =
+        "Select Movies To Delete";
+      return showDel(result);
+    })
+    .catch((error) => console.error("Error:", error));
+  return;
+};
+
+const showdeleteMovies = () => {
+  document.getElementById("subHeadText").style.display = "none";
+  document.getElementById("buttons").style.display = "none";
+  document.getElementById("dropdownMenuButton").style.display = "none";
+  document.getElementById("spinner").style.display = "block";
+  setTimeout(() => getdelMovies(prod_url), 1000);
+  return;
+};
+//--------------------------------------------
+
 //------Close Button--------------------------------------------
 const closeMoviesList = () => {
   document.getElementById("allmovies").style.display = "none";
+  document.getElementById("alldelmovies").style.display = "none";
+  document.getElementById("delForm").style.display = "none";
   document.getElementById("moviesHeader").style.display = "none";
+  document.getElementById("delmoviesHeader").style.display = "none";
   document.getElementById("closeMovies").style.display = "none";
+  document.getElementById("closeMovies2").style.display = "none";
   document.getElementById("subHeadText").style.display = "block";
   document.getElementById("buttons").style.display = "block";
   document.getElementById("dropdownMenuButton").style.display = "inline";
