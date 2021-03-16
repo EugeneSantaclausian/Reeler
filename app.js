@@ -54,6 +54,7 @@ function showDel(data) {
       <small id="delgenre">${movie.genre}</small>
       <button
         class="btn btn-sm btn-danger fw-bold border-white text-center"
+        onclick="deleteMovie()"
       >
         Delete
       </button>
@@ -372,6 +373,7 @@ function showError(data) {
 
   // Setting innerHTML as tab variable
   document.getElementById("allmovies").style.display = "block";
+  document.getElementById("moviesHeader").innerHTML = "Error Message";
   document.getElementById("moviesHeader").style.display = "block";
   document.getElementById("subHeadText").style.display = "none";
   document.getElementById("buttons").style.display = "none";
@@ -385,11 +387,11 @@ function showError(data) {
 //--------------SHOW ERROR-----------------------------------------
 
 //actual deletemovie
-function deleteMovie() {
+function deleteMovie(movie) {
   console.log("Del Movies:", delMovies);
 
-  const itemtitle = document.getElementById("delSelect").innerText;
-  console.log(itemtitle);
+  const title = document.getElementById("deltitle").innerText;
+  console.log("WORKS..", movie.title);
 
   {
     /* axios
