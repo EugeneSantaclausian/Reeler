@@ -216,6 +216,10 @@ const getForm = (event) => {
   const myear = document.getElementById("movieYear").value;
   const mgenre = document.getElementById("selectedGenre").value;
   //return alert(`${title}, ${year}, ${genre}`);
+  document.getElementById("subHeadText").style.display = "none";
+  document.getElementById("buttons").style.display = "none";
+  document.getElementById("dropdownMenuButton").style.display = "none";
+  document.getElementById("spinner").style.display = "block";
   axios
     .post(
       prod_url,
@@ -232,6 +236,7 @@ const getForm = (event) => {
     )
     .then((response) => {
       console.log(response.data);
+      document.getElementById("spinner").style.display = "none";
       document.getElementById("moviesHeader").innerHTML = "New Movie Added!";
       showModal(response.data);
       return document.getElementById("movieForm").reset();
