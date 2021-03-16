@@ -48,6 +48,7 @@
 
       <main class="px-3 text-center">
         <h1 class="display-3" id="pageTitle">Reeler</h1>
+
         <!--Spinner-->
         <div
           class="spinner-grow text-center mx-auto"
@@ -80,6 +81,12 @@
             onclick="showdeleteMovies()"
           >
             Delete Movie
+          </a>
+          <a
+            class="btn btn-lg btn-warning fw-bold border-white text-center"
+            onclick="showupdateMovies()"
+          >
+            Update Movie
           </a>
           <ul
             class="dropdown-menu dropdown-menu-dark"
@@ -159,34 +166,37 @@
           id="delmoviesHeader"
         ></p>
 
-        <div id="alldelmovies">
-          <form id="delForm" class="form form-control">
-            <label class="form-label h5">Choose Movie</label>
-            <select
-              class="form-select"
-              aria-label="Default select example"
-              id="delSelectedGenre"
-              required
-            >
-              <option value="delSelect"></option>
-            </select>
-          </form>
-
-          <a
-            class="btn btn-lg btn-danger fw-bold border-white mt-3 mb-3 mr-4 ml-4 text-center"
-            id="closeMovies2"
-            >Delete</a
-          >
+        <div class="list-group list-group-flush mt-4 mb-4" id="alldelmovies">
+          <a href="#" id="link" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1" id="deltitle"></h5>
+              <small id="delyear"></small>
+            </div>
+            <div class="d-flex w-100 justify-content-between">
+              <small id="delgenre"></small>
+              <button
+                class="btn btn-sm btn-danger fw-bold border-white text-center"
+              >
+                Delete
+              </button>
+            </div>
+          </a>
         </div>
-        <!---ALL DELETE MOVIES DROPDOWN LIST SHOW HERE-->
 
         <a
           class="btn btn-lg btn-danger fw-bold border-white mt-3 mb-3 mr-4 ml-4 text-center"
-          onclick="closeMoviesList()"
-          id="closeMovies"
-          >Close</a
+          id="closeMovies2"
+          >Delete</a
         >
       </div>
+      <!---ALL DELETE MOVIES DROPDOWN LIST SHOW HERE-->
+
+      <a
+        class="btn btn-lg btn-danger fw-bold border-white mt-3 mb-3 mr-4 ml-4 text-center"
+        onclick="closeMoviesList()"
+        id="closeMovies"
+        >Close</a
+      >
 
       <!--SUBMIT NEW MOVIE FORM-->
       <form id="movieForm" class="mr-4 ml-4">

@@ -1,7 +1,7 @@
 //import axios from "axios";
 document.getElementById("allmovies").style.display = "none";
 document.getElementById("alldelmovies").style.display = "none";
-document.getElementById("delForm").style.display = "none";
+//document.getElementById("delForm").style.display = "none";
 document.getElementById("moviesHeader").style.display = "none";
 document.getElementById("delmoviesHeader").style.display = "none";
 document.getElementById("closeMovies").style.display = "none";
@@ -22,7 +22,7 @@ function show(data) {
     <h5 class="mb-1" id="title">${movie.title}</h5>
     <small id="year">${movie.year}</small>
   </div>
-  <small id="genre">${movie.genre}</small>
+    <small id="genre">${movie.genre}</small>
 </a>
   `
   );
@@ -45,7 +45,20 @@ function show(data) {
 function showDel(data) {
   itemList = data.map(
     (movie) => `
-      <option value="delSelect">${movie.title}</option>
+    <a href="#" id="link" class="list-group-item list-group-item-action" id="alldelmovies">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1" id="deltitle">${movie.title}</h5>
+      <small id="delyear">${movie.year}</small>
+    </div>
+    <div class="d-flex w-100 justify-content-between">
+      <small id="delgenre">${movie.genre}</small>
+      <button
+        class="btn btn-sm btn-danger fw-bold border-white text-center"
+      >
+        Delete
+      </button>
+    </div>
+  </a>
   `
   );
 
@@ -53,7 +66,45 @@ function showDel(data) {
 
   // Setting innerHTML as tab variable
   document.getElementById("alldelmovies").style.display = "block";
-  document.getElementById("delForm").style.display = "block";
+  //document.getElementById("delForm").style.display = "block";
+  document.getElementById("allmovies").style.display = "none";
+  document.getElementById("moviesHeader").style.display = "none";
+  document.getElementById("delmoviesHeader").style.display = "block";
+  document.getElementById("closeMovies").style.display = "block";
+  document.getElementById("subHeadText").style.display = "none";
+  document.getElementById("buttons").style.display = "none";
+  document.getElementById("dropdownMenuButton").style.display = "none";
+  document.getElementById("alldelmovies").innerHTML = arrangedList;
+  return;
+}
+//------------------------------------------------
+
+//----------Function to Display All Data - UPDATE-------------------------
+function showUpdate(data) {
+  itemList = data.map(
+    (movie) => `
+    <a href="#" id="link" class="list-group-item list-group-item-action" id="alldelmovies">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1" id="uptitle">${movie.title}</h5>
+      <small id="upyear">${movie.year}</small>
+    </div>
+    <div class="d-flex w-100 justify-content-between">
+      <small id="upgenre">${movie.genre}</small>
+      <button
+        class="btn btn-sm btn-primary fw-bold border-white text-center"
+      >
+        Update
+      </button>
+    </div>
+  </a>
+  `
+  );
+
+  const arrangedList = itemList.join("");
+
+  // Setting innerHTML as tab variable
+  document.getElementById("alldelmovies").style.display = "block";
+  //document.getElementById("delForm").style.display = "block";
   document.getElementById("allmovies").style.display = "none";
   document.getElementById("moviesHeader").style.display = "none";
   document.getElementById("delmoviesHeader").style.display = "block";
@@ -79,7 +130,11 @@ const requestMovies = (path) => {
       document.getElementById("moviesHeader").innerHTML = "All Movies";
       return show(result);
     })
-    .catch((error) => console.error("Error:", error));
+    .catch((error) => {
+      console.error("Error:", error),
+        (document.getElementById("spinner").style.display = "none"),
+        showError(error);
+    });
   return;
 };
 
@@ -106,7 +161,11 @@ const requestAnime = () => {
       document.getElementById("moviesHeader").innerHTML = "Animation Movies";
       return show(result);
     })
-    .catch((error) => console.error("Error:", error));
+    .catch((error) => {
+      console.error("Error:", error),
+        (document.getElementById("spinner").style.display = "none"),
+        showError(error);
+    });
 };
 
 const getAnimationMovies = () => {
@@ -132,7 +191,11 @@ const requestAction = () => {
       document.getElementById("moviesHeader").innerHTML = "Action Movies";
       return show(result);
     })
-    .catch((error) => console.error("Error:", error));
+    .catch((error) => {
+      console.error("Error:", error),
+        (document.getElementById("spinner").style.display = "none"),
+        showError(error);
+    });
 };
 
 const getActionMovies = () => {
@@ -158,7 +221,11 @@ const requestComedy = () => {
       document.getElementById("moviesHeader").innerHTML = "Comedy Movies";
       return show(result);
     })
-    .catch((error) => console.error("Error:", error));
+    .catch((error) => {
+      console.error("Error:", error),
+        (document.getElementById("spinner").style.display = "none"),
+        showError(error);
+    });
 };
 
 const getComedyMovies = () => {
@@ -184,7 +251,11 @@ const requestMystery = () => {
       document.getElementById("moviesHeader").innerHTML = "Mystery Movies";
       return show(result);
     })
-    .catch((error) => console.error("Error:", error));
+    .catch((error) => {
+      console.error("Error:", error),
+        (document.getElementById("spinner").style.display = "none"),
+        showError(error);
+    });
 };
 
 const getMysteryMovies = () => {
@@ -219,6 +290,9 @@ const getForm = (event) => {
   document.getElementById("subHeadText").style.display = "none";
   document.getElementById("buttons").style.display = "none";
   document.getElementById("dropdownMenuButton").style.display = "none";
+  document.getElementById("moviesHeader").style.display = "none";
+  document.getElementById("movieForm").style.display = "none";
+  document.getElementById("closeForm").style.display = "none";
   document.getElementById("spinner").style.display = "block";
   axios
     .post(
@@ -238,10 +312,16 @@ const getForm = (event) => {
       console.log(response.data);
       document.getElementById("spinner").style.display = "none";
       document.getElementById("moviesHeader").innerHTML = "New Movie Added!";
+      document.getElementById("closeForm").style.display = "block";
       showModal(response.data);
       return document.getElementById("movieForm").reset();
     })
-    .catch((error) => console.error("Error:", error));
+    .catch((error) => {
+      console.error("Error:", error),
+        (document.getElementById("spinner").style.display = "none"),
+        (document.getElementById("closeForm").style.display = "block");
+      showError(error);
+    });
   return;
 };
 //-------------------------------------------------------
@@ -275,6 +355,36 @@ function showModal(data) {
 
 //--------------SHOW MODAL-----------------------------------------
 
+//--------------SHOW ERROR-----------------------------------------
+
+function showError(data) {
+  newError = `
+  <a href="#" class="list-group-item list-group-item-action" >
+  <div class="d-flex w-100 justify-content-between">
+    <h5 class="mb-1" id="title">Error</h5>
+    <small id="year"></small>
+  </div>
+  <small id="genre">${data}</small>
+</a>
+  `;
+
+  //const arrangedList = newMovie.join("");
+
+  // Setting innerHTML as tab variable
+  document.getElementById("allmovies").style.display = "block";
+  document.getElementById("moviesHeader").style.display = "block";
+  document.getElementById("subHeadText").style.display = "none";
+  document.getElementById("buttons").style.display = "none";
+  document.getElementById("dropdownMenuButton").style.display = "none";
+  document.getElementById("movieForm").style.display = "none";
+  document.getElementById("allmovies").innerHTML = newError;
+  return;
+}
+//-------------------------------------------------------
+
+//--------------SHOW ERROR-----------------------------------------
+
+//actual deletemovie
 function deleteMovie() {
   console.log("Del Movies:", delMovies);
 
@@ -310,7 +420,11 @@ const getdelMovies = (path) => {
         "Select Movies To Delete";
       return showDel(result);
     })
-    .catch((error) => console.error("Error:", error));
+    .catch((error) => {
+      console.error("Error:", error),
+        (document.getElementById("spinner").style.display = "none"),
+        showError(error);
+    });
   return;
 };
 
@@ -324,15 +438,46 @@ const showdeleteMovies = () => {
 };
 //--------------------------------------------
 
+//------Request to UPDATE Movies------
+const getUpdateMovies = (path) => {
+  axios
+    .get(path)
+    .then((response) => {
+      var result = response.data;
+      delMovies = result;
+      console.log(result);
+      document.getElementById("spinner").style.display = "none";
+      document.getElementById("delmoviesHeader").innerHTML =
+        "Select Movies To Update";
+      return showUpdate(result);
+    })
+    .catch((error) => {
+      console.error("Error:", error),
+        (document.getElementById("spinner").style.display = "none"),
+        showError(error);
+    });
+  return;
+};
+
+const showupdateMovies = () => {
+  document.getElementById("subHeadText").style.display = "none";
+  document.getElementById("buttons").style.display = "none";
+  document.getElementById("dropdownMenuButton").style.display = "none";
+  document.getElementById("spinner").style.display = "block";
+  setTimeout(() => getUpdateMovies(prod_url), 1000);
+  return;
+};
+//--------------------------------------------
+
 //------Close Button--------------------------------------------
 const closeMoviesList = () => {
   document.getElementById("allmovies").style.display = "none";
   document.getElementById("alldelmovies").style.display = "none";
-  document.getElementById("delForm").style.display = "none";
+  //document.getElementById("delForm").style.display = "none";
   document.getElementById("moviesHeader").style.display = "none";
   document.getElementById("delmoviesHeader").style.display = "none";
   document.getElementById("closeMovies").style.display = "none";
-  document.getElementById("closeMovies2").style.display = "none";
+  //document.getElementById("closeMovies2").style.display = "none";
   document.getElementById("subHeadText").style.display = "block";
   document.getElementById("buttons").style.display = "block";
   document.getElementById("dropdownMenuButton").style.display = "inline";

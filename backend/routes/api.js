@@ -28,8 +28,8 @@ router.get("/:genre", async (req, res) => {
   await getMovies(); //get all movies first
   movie = allMovies.filter((mov) => mov.genre == req.params.genre);
   movie == null || undefined
-    ? res.send("Genre Not Found!!").status(404)
-    : res.send(movie);
+    ? res.status(404).send("Genre Not Found!!")
+    : res.status(200).send(movie);
   return console.log(`${req.params.genre} movies are:`, movie);
 });
 
@@ -67,9 +67,9 @@ router.post("/", (req, res) => {
       await schema.validateAsync(movie); //Validates
       await createMovie(movie);
       ///movies.unshift(movie);
-      return res.send(movie).status(200);
+      return res.status(200).send(movie);
     } catch (err) {
-      return res.send(err).status(400);
+      return res.status(400).send(err);
     }
   };
   validator(); //an async function to validate the req.body
@@ -79,10 +79,10 @@ router.delete("/:id", async (req, res) => {
   await getMovies(); //get all movies first
   movie = allMovies.filter((mov) => mov.id == req.params.id);
   if (movie == null || undefined) {
-    return res.send("Movie Not Found!!").status(404);
+    return res.status(404).send("Movie Not Found!!");
   } else {
     await movie.findByIdandRemove(req.params.id);
-    return res.send(movie).status(200);
+    return res.status(200).send(movie);
   }
 });
 
