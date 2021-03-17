@@ -66,7 +66,6 @@ router.post("/", (req, res) => {
     try {
       await schema.validateAsync(movie); //Validates
       await createMovie(movie);
-      ///movies.unshift(movie);
       return res.status(200).send(movie);
     } catch (err) {
       return res.status(400).send(err);
@@ -75,8 +74,8 @@ router.post("/", (req, res) => {
   validator(); //an async function to validate the req.body
 });
 
+//Delete Request for a Movie using the ID
 router.delete("/:id", async (req, res) => {
-  const delMovie = new Moviesdb(); //instance of the Model from the db
   await getMovies(); //get all movies first
   movie = allMovies.filter((mov) => mov.id == req.params.id);
   if (movie == null || undefined) {
@@ -88,5 +87,17 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-//app.listen(port, () => console.log(`Listening on Port ${port}....`));
+//Put Request for a Movie using the ID
+router.put(":/id", async (req, res) => {
+  await getMovies(); //get all movies first
+  movie = allMovies.filter((mov) => mov.id == req.params.id);
+  if (movie == null || undefined) {
+    return res.status(404).send("Movie Not Found!!");
+  } else {
+    return await Moviesdb.findByIdAndUpdate(req.params.id, req.body.title)
+      .then((movie) => res.status(200).send(movie))
+      .catch((error) => res.status(400).send(error));
+  }
+});
+
 module.exports = router;

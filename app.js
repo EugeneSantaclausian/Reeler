@@ -1,6 +1,7 @@
 //import axios from "axios";
 document.getElementById("allmovies").style.display = "none";
 document.getElementById("alldelmovies").style.display = "none";
+document.getElementById("movieUpdateForm").style.display = "none";
 //document.getElementById("delForm").style.display = "none";
 document.getElementById("moviesHeader").style.display = "none";
 document.getElementById("delmoviesHeader").style.display = "none";
@@ -93,6 +94,7 @@ function showUpdate(data) {
       <small id="upgenre">${movie.genre}</small>
       <button
         class="btn btn-sm btn-primary fw-bold border-white text-center"
+        onclick='showUpdateForm("${movie._id}","${movie.title}")'
       >
         Update
       </button>
@@ -114,6 +116,46 @@ function showUpdate(data) {
   document.getElementById("buttons").style.display = "none";
   document.getElementById("dropdownMenuButton").style.display = "none";
   document.getElementById("alldelmovies").innerHTML = arrangedList;
+  return;
+}
+//------------------------------------------------
+
+//----------Function to Display All Data - UPDATE-------------------------
+function showUpdateForm(id, title) {
+  item = `
+  <p
+    class="h3 text-center pb-2 pt-2 mb-4 bg-dark text-white"
+    id="subHeadText"
+  >
+    Update Movie Details
+  </p>
+  <p class="lead" id="subHeadText"><bold>ID: </bold>${id}</p>
+  <p class="lead" id="subHeadText"><bold>Title: </bold>${title}</p>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label"
+      ><h5 class="ml-4">Enter New Title</h5></label
+    >
+    <input type="text" class="form-control" id="movieTitle" required />
+  </div>
+  <button onclick="updateMovie('${title}','${id}')" class="btn btn-primary w-100 mb-3">
+  Submit
+</button>
+  `;
+
+  //const arrangedList = item.join("");
+
+  // Setting innerHTML as tab variable
+  document.getElementById("alldelmovies").style.display = "none";
+  document.getElementById("closeForm").style.display = "block";
+  document.getElementById("allmovies").style.display = "none";
+  document.getElementById("moviesHeader").style.display = "none";
+  document.getElementById("delmoviesHeader").style.display = "none";
+  document.getElementById("closeMovies").style.display = "none";
+  document.getElementById("subHeadText").style.display = "none";
+  document.getElementById("buttons").style.display = "none";
+  document.getElementById("dropdownMenuButton").style.display = "none";
+  document.getElementById("movieUpdateForm").style.display = "block";
+  document.getElementById("movieUpdateForm").innerHTML = item;
   return;
 }
 //------------------------------------------------
@@ -390,7 +432,7 @@ function showError(data) {
 //actual deletemovie
 function deleteMovie(id) {
   const delete_url_prod = `https://reeler.herokuapp.com/api/movies/${id}`;
-  console.log(id, "has been clicked");
+  console.log(id, "has been clicked to DELETE");
 
   document.getElementById("delmoviesHeader").style.display = "none";
   document.getElementById("alldelmovies").style.display = "none";
@@ -449,6 +491,38 @@ const showdeleteMovies = () => {
 };
 //--------------------------------------------
 
+//actual deletemovie
+function updateMovie(title, updateid) {
+  const update_url_prod = `https://reeler.herokuapp.com/api/movies/${updateid}`;
+  console.log(title, "has been clicked to UPDATE");
+
+  document.getElementById("delmoviesHeader").style.display = "none";
+  document.getElementById("alldelmovies").style.display = "none";
+  document.getElementById("movieUpdateForm").style.display = "none";
+  document.getElementById("closeMovies").style.display = "none";
+  document.getElementById("spinner").style.display = "block";
+
+  axios
+    .put(update_url_prod, {
+      title: title,
+    })
+    .then((response) => {
+      console.log(response.data);
+      document.getElementById("spinner").style.display = "none";
+      document.getElementById("moviesHeader").innerHTML = "Movie Updated!";
+      document.getElementById("closeMovies").style.display = "block";
+      return showModal(response.data);
+    })
+    .catch((error) => {
+      console.error("Error:", error),
+        (document.getElementById("spinner").style.display = "none"),
+        (document.getElementById("closeForm").style.display = "block");
+      showError(error);
+    });
+  return;
+}
+//-------------------------------------------------------
+
 //------Request to UPDATE Movies------
 const getUpdateMovies = (path) => {
   axios
@@ -495,6 +569,7 @@ const closeMoviesList = () => {
   document.getElementById("movieForm").style.display = "none";
   document.getElementById("closeForm").style.display = "none";
   document.getElementById("pageTitle").style.display = "block";
+  document.getElementById("movieUpdateForm").style.display = "none";
   document.getElementById("movieForm").reset();
   return;
 };
