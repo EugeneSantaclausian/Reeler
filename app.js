@@ -398,17 +398,9 @@ function deleteMovie(id) {
   document.getElementById("spinner").style.display = "block";
 
   axios
-    .delete(
-      delete_url_prod,
-      {
-        id: id,
-      },
-      {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-      }
-    )
+    .delete(delete_url_prod, {
+      id: id,
+    })
     .then((response) => {
       console.log(response.data);
       document.getElementById("spinner").style.display = "none";
