@@ -388,9 +388,9 @@ function showError(data) {
 //--------------SHOW ERROR-----------------------------------------
 
 //actual deletemovie
-function deleteMovie(movieid) {
-  const delete_url_prod = `https://reeler.herokuapp.com/api/movies/${movieid}`;
-  console.log(movieid, "has been clicked");
+function deleteMovie(id) {
+  const delete_url_prod = `https://reeler.herokuapp.com/api/movies/${id}`;
+  console.log(id, "has been clicked");
 
   document.getElementById("delmoviesHeader").style.display = "none";
   document.getElementById("alldelmovies").style.display = "none";
@@ -401,7 +401,7 @@ function deleteMovie(movieid) {
     .delete(
       delete_url_prod,
       {
-        id: movieid,
+        id: id,
       },
       {
         headers: {

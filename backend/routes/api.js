@@ -76,12 +76,13 @@ router.post("/", (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
+  const delMovie = new Moviesdb(); //instance of the Model from the db
   await getMovies(); //get all movies first
   movie = allMovies.filter((mov) => mov.id == req.params.id);
   if (movie == null || undefined) {
     return res.status(404).send("Movie Not Found!!");
   } else {
-    await movie.findByIdandRemove(req.params.id);
+    await delMovie.findByIdAndDelete(req.params.id);
     return res.status(200).send(movie);
   }
 });
