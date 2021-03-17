@@ -88,14 +88,18 @@ router.delete("/:id", async (req, res) => {
 });
 
 //Put Request for a Movie using the ID
-router.put(":/id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   await getMovies(); //get all movies first
   movie = allMovies.filter((mov) => mov.id == req.params.id);
   if (movie == null || undefined) {
     return res.status(404).send("Movie Not Found!!");
   } else {
-    return await Moviesdb.findByIdAndUpdate(req.params.id, req.body.title)
-      .then((movie) => res.status(200).send(movie))
+    return await Moviesdb.findByIdAndUpdate({ _id: req.params.id }, req.body)
+      .then(() =>
+        Moviesdb.findOne({ _id: req.params.id }).then((response) =>
+          res.status(200).send(response)
+        )
+      )
       .catch((error) => res.status(400).send(error));
   }
 });

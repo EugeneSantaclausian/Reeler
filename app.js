@@ -135,7 +135,7 @@ function showUpdateForm(id, title) {
     <label for="exampleInputEmail1" class="form-label"
       ><h5 class="ml-4">Enter New Title</h5></label
     >
-    <input type="text" class="form-control" id="movieTitle" required />
+    <input type="text" class="form-control" id="updateTitle" required />
   </div>
   <button onclick="updateMovie('${title}','${id}')" class="btn btn-primary w-100 mb-3">
   Submit
@@ -492,9 +492,9 @@ const showdeleteMovies = () => {
 //--------------------------------------------
 
 //actual deletemovie
-function updateMovie(title, updateid) {
+function updateMovie(oldtitle, updateid) {
   const update_url_prod = `https://reeler.herokuapp.com/api/movies/${updateid}`;
-  console.log(title, "has been clicked to UPDATE");
+  console.log(oldtitle, "with id:", updateid, "has been clicked to UPDATE");
 
   document.getElementById("delmoviesHeader").style.display = "none";
   document.getElementById("alldelmovies").style.display = "none";
@@ -502,15 +502,24 @@ function updateMovie(title, updateid) {
   document.getElementById("closeMovies").style.display = "none";
   document.getElementById("spinner").style.display = "block";
 
+  const newtitle = document.getElementById("updateTitle").value;
+
   axios
-    .put(update_url_prod, {
-      title: title,
-    })
+    .put(
+      update_url_prod,
+      {
+        title: newtitle,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
     .then((response) => {
       console.log(response.data);
       document.getElementById("spinner").style.display = "none";
       document.getElementById("moviesHeader").innerHTML = "Movie Updated!";
-      document.getElementById("closeMovies").style.display = "block";
       return showModal(response.data);
     })
     .catch((error) => {
