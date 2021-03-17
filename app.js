@@ -44,8 +44,8 @@ function show(data) {
 //----------Function to Display All Data - DELETE-------------------------
 function showDel(data) {
   itemList = data.map(
-    (movie) => `
-    <a href="#" id="link" class="list-group-item list-group-item-action" id="alldelmovies">
+    (movie) =>
+      `<a href="#" id="link" class="list-group-item list-group-item-action" id="alldelmovies">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1" id="deltitle">${movie.title}</h5>
       <small id="delyear">${movie.year}</small>
@@ -54,7 +54,7 @@ function showDel(data) {
       <small id="delgenre">${movie.genre}</small>
       <button
         class="btn btn-sm btn-danger fw-bold border-white text-center"
-        onclick="deleteMovie()"
+        onclick='deleteMovie("${movie._id}")'
       >
         Delete
       </button>
@@ -379,6 +379,7 @@ function showError(data) {
   document.getElementById("buttons").style.display = "none";
   document.getElementById("dropdownMenuButton").style.display = "none";
   document.getElementById("movieForm").style.display = "none";
+  document.getElementById("alldelmovies").style.display = "none";
   document.getElementById("allmovies").innerHTML = newError;
   return;
 }
@@ -387,25 +388,41 @@ function showError(data) {
 //--------------SHOW ERROR-----------------------------------------
 
 //actual deletemovie
-function deleteMovie(movie) {
-  console.log("Del Movies:", delMovies);
+function deleteMovie(movieid) {
+  const delete_url_prod = `https://reeler.herokuapp.com/api/movies/${movieid}`;
+  console.log(movieid, "has been clicked");
 
-  const title = document.getElementById("deltitle").innerText;
-  console.log("WORKS..", movie.title);
+  document.getElementById("delmoviesHeader").style.display = "none";
+  document.getElementById("alldelmovies").style.display = "none";
+  document.getElementById("closeMovies").style.display = "none";
+  document.getElementById("spinner").style.display = "block";
 
-  {
-    /* axios
-    .del(dev_url, {
-      id: itemid,
-    })
+  axios
+    .delete(
+      delete_url_prod,
+      {
+        id: movieid,
+      },
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    )
     .then((response) => {
       console.log(response.data);
+      document.getElementById("spinner").style.display = "none";
       document.getElementById("moviesHeader").innerHTML = "Movie Deleted!";
+      document.getElementById("closeMovies").style.display = "block";
       return showModal(response.data);
     })
-    .catch((error) => console.error("Error:", error));
-  return;*/
-  }
+    .catch((error) => {
+      console.error("Error:", error),
+        (document.getElementById("spinner").style.display = "none"),
+        (document.getElementById("closeForm").style.display = "block");
+      showError(error);
+    });
+  return;
 }
 //-------------------------------------------------------
 
