@@ -11,18 +11,6 @@ var corsOptions = {
 };
 app.use(cors(corsOptions)); //add corsOptions as an argument in cors() when deploying to netlify
 app.use("/api/movies", movies);
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Methods",
-    "OPTIONS, GET, POST, PUT, HEAD, DELETE"
-  );
-  res.header(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With, X-HTTP-Method-Override, content-type, Accept"
-  );
-  next();
-});
 
 app.listen(port, () => {
   console.log(`Listening on ${port}....`);

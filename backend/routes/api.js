@@ -82,13 +82,8 @@ router.delete("/:id", async (req, res) => {
   if (movie == null || undefined) {
     return res.status(404).send("Movie Not Found!!");
   } else {
-    return await delMovie
-      .findByIdAndDelete(req.params.id)
-      .then((movie) =>
-        !movie
-          ? res.status(404).send(`Movie with id:${req.params.id} not found`)
-          : res.status(200).send(movie)
-      )
+    return await Moviesdb.findByIdAndDelete(req.params.id)
+      .then((movie) => res.status(200).send(movie))
       .catch((error) => res.status(400).send(error));
   }
 });
