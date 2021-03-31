@@ -71,7 +71,7 @@ router.post("/", (req, res) => {
       return res.status(400).send(err);
     }
   };
-  validator(); //an async function to validate the req.body
+  validator(); //an async function to validate the req.body & post new movie to db
 });
 
 //Delete Request for a Movie using the ID
