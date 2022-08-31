@@ -3,6 +3,7 @@ const router = express.Router();
 const Joi = require("joi");
 const Moviesdb = require("../db/main");
 const db = require("../db/connect");
+const axios = require("axios");
 
 router.use(express.urlencoded({ extended: true })); //Body Parser
 router.use(express.json()); //Body Parser
@@ -15,6 +16,36 @@ const getMovies = async () => {
   db.Connect();
   allMovies = await Moviesdb.find({});
 };
+
+//Useless Test Endpoint for Bargain Moto(Test Payment for Kwori API)
+router.post("/test-payment", async (req, res) => {
+  const body = {
+    requestId: req.body.requestId,
+    appReference: req.body.appReference,
+    secret: req.body.secret,
+  };
+
+  let axiosConfig = {
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+      "Access-Control-Allow-Origin": "https://posapi.usebillbox.com/",
+      appId: req.header("appId"),
+    },
+  };
+
+  axios
+    .post(
+      "https://posapi.usebillbox.com/webpos/listPayOptions",
+      body,
+      axiosConfig
+    )
+    .then((response) => {
+      return res.status(200).send(response);
+    })
+    .catch((err) => {
+      return res.status(500).send(err);
+    });
+});
 
 //Get Request for all movies
 router.get("/", async (req, res) => {
