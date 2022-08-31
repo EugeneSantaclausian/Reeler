@@ -40,10 +40,10 @@ router.post("/test-payment", async (req, res) => {
       axiosConfig
     )
     .then((response) => {
-      return res.status(200).send(response);
+      return res.status(200).json(response.data);
     })
     .catch((err) => {
-      return res.status(500).send(err);
+      return res.send(err);
     });
 });
 
