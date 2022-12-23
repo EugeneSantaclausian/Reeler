@@ -5,7 +5,7 @@ const movies = require("./routes/api");
 
 const port = process.env.PORT || 3500;
 var corsOptions = {
-  origin: [port, "https://reeler.netlify.app"],
+  origin: "*",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders: ["Content-Type"],
   optionsSuccessStatus: 200,
