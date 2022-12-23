@@ -17,36 +17,6 @@ const getMovies = async () => {
   allMovies = await Moviesdb.find({});
 };
 
-//Useless Test Endpoint for Bargain Moto(Test Payment for Kwori API)
-router.post("/test-payment", async (req, res) => {
-  const body = {
-    requestId: req.body.requestId,
-    appReference: req.body.appReference,
-    secret: req.body.secret,
-  };
-
-  let axiosConfig = {
-    headers: {
-      "Content-Type": "application/json;charset=UTF-8",
-      "Access-Control-Allow-Origin": "https://posapi.usebillbox.com/",
-      appId: req.header("appId"),
-    },
-  };
-
-  axios
-    .post(
-      "https://posapi.usebillbox.com/webpos/listPayOptions",
-      body,
-      axiosConfig
-    )
-    .then((response) => {
-      return res.status(200).json(response.data);
-    })
-    .catch((err) => {
-      return res.send(err);
-    });
-});
-
 //Get Request for all movies
 router.get("/", async (req, res) => {
   await getMovies();
